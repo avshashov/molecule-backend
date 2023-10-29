@@ -1,4 +1,4 @@
-git [tool.poetry]
+[tool.poetry]
 name = "molecule-backend"
 version = "0.1.0"
 description = ""
@@ -7,6 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pydantic = "2.4.2"
+pydantic-settings = "2.0.3"
+pydantic-settings-yaml = "0.2.0"
+fastapi = "0.104.0"
+sqlalchemy = "2.0.22"
+asyncpg = "0.28.0"
+pyyaml = "6.0.1"
 
 
 [build-system]
