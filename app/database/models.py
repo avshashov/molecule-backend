@@ -35,8 +35,8 @@ class News(BaseWithId):
     text: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    bot_post_setting_id: Mapped[int] = mapped_column(ForeignKey('bot_post_setting.id'))
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id'))
+    bot_post_setting_id: Mapped[int] = mapped_column(ForeignKey('bot_post_setting.id', ondelete='CASCADE'))
+    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class BotPostSetting(BaseWithId):
@@ -57,10 +57,10 @@ class Project(BaseWithId):
     title: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     text: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
-    project_category_id: Mapped[int] = mapped_column(ForeignKey('project_category.id'))
+    project_category_id: Mapped[int] = mapped_column(ForeignKey('project_category.id', ondelete='CASCADE'))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id'))
+    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class Press(BaseWithId):
@@ -70,7 +70,7 @@ class Press(BaseWithId):
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id'))
+    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
     external_link: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
 
 
@@ -79,7 +79,7 @@ class Electron(BaseWithId):
 
     name: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
-    photo_id: Mapped[int] = mapped_column(ForeignKey('media.id'))
+    photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class Painting(BaseWithId):
@@ -91,11 +91,11 @@ class Painting(BaseWithId):
     materials: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id'))
+    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class MediaPainting(Base):
     __tablename__ = 'media_painting'
 
-    media_id: Mapped[int] = mapped_column(ForeignKey('media.id'), primary_key=True)
-    painting_id: Mapped[int] = mapped_column(ForeignKey('painting.id'))
+    media_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'), primary_key=True)
+    painting_id: Mapped[int] = mapped_column(ForeignKey('painting.id', ondelete='CASCADE'))
