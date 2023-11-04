@@ -21,7 +21,7 @@ class Database:
     def _build_url(self) -> str:
         url = (
             f'{self._settings_db.dbms}+'
-            f'{self._settings_db.driver}asyncpg://'
+            f'{self._settings_db.driver}://'
             f'{self._settings_db.user}:'
             f'{self._settings_db.password}@'
             f'{self._settings_db.host}:'
