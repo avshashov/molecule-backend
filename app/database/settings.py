@@ -6,8 +6,8 @@ from app.database.models import Base
 class Database:
     def __init__(self):
         self._settings_db = settings.database
-        url = self._build_url()
-        self.engine = create_async_engine(url=url, echo=self._settings_db.echo_db)
+        self._url = self._build_url()
+        self.engine = create_async_engine(url=self._url, echo=self._settings_db.echo_db)
         self.async_session = async_sessionmaker(bind=self.engine, autoflush=False, expire_on_commit=False)
 
     async def create_tables(self) -> None:
@@ -29,3 +29,7 @@ class Database:
             f'{self._settings_db.database}'
         )
         return url
+    
+    @property
+    def url(self):
+        return self._url

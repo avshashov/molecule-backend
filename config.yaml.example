@@ -1,9 +1,9 @@
 database:
-    dbms:
-    driver:
-    host:
-    port:
-    user:
-    password:
-    database:
-    echo_db:
+    dbms: # Main database for application (str)
+    driver: # Async or sync db driver (str)
+    host: # Database host (str)
+    port: # Database port (int)
+    user: # Database user (str)
+    password: # Database password (str)
+    database: # Database name (str)
+    echo_db: # Print database log output (bool)
