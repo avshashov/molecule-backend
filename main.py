@@ -8,7 +8,6 @@ from app.database.settings import Database
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await Database().create_tables()
     yield
 
 
