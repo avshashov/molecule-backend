@@ -5,11 +5,11 @@ from pydantic_settings_yaml import YamlBaseSettings
 
 class Database(BaseModel):
     dbms: str
-    driver: str
+    driver: str | None
     host: str
-    port: int
+    port: int | None
     user: str
-    password: str
+    password: str | None
     database: str
     echo_db: bool
 

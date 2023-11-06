@@ -19,14 +19,17 @@ class Database:
             yield session
 
     def _build_url(self) -> str:
+        driver = f'+{self._settings_db.driver}' if self._settings_db.driver else ''
+        password = f':{self._settings_db.password}' if self._settings_db.password else ''
+        port = f':{self._settings_db.port}' if self._settings_db.port else ''
         url = (
-            f'{self._settings_db.dbms}+'
-            f'{self._settings_db.driver}://'
-            f'{self._settings_db.user}:'
-            f'{self._settings_db.password}@'
-            f'{self._settings_db.host}:'
-            f'{self._settings_db.port}/'
-            f'{self._settings_db.database}'
+            f'{self._settings_db.dbms}'
+            f'{driver}'
+            f'://{self._settings_db.user}'
+            f'{password}'
+            f'@{self._settings_db.host}'
+            f'{port}'
+            f'/{self._settings_db.database}'
         )
         return url
     
