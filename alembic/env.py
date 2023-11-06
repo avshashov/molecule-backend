@@ -28,13 +28,15 @@ target_metadata = Base.metadata
 # ... etc.
 def build_url() -> str:
     db = settings.database
+    password = f':{db.password}' if db.password else ''
+    port = f':{db.port}' if db.port else ''
     return (
         f'{db.dbms}://'
-        f'{db.user}:'
-        f'{db.password}@'
-        f'{db.host}:'
-        f'{db.port}/'
-        f'{db.database}'
+        f'{db.user}'
+        f'{password}'
+        f'@{db.host}'
+        f'{port}'
+        f'/{db.database}'
     )
 
 
@@ -51,7 +53,6 @@ def run_migrations_offline() -> None:
 
     """
     url = build_url()
-    print(url)
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -71,7 +72,6 @@ def run_migrations_online() -> None:
 
     """
     url = build_url()
-    print(url)
     connectable = create_engine(url)
 
     with connectable.connect() as connection:
