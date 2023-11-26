@@ -1,11 +1,11 @@
-from sqlalchemy import select, delete, update
+from sqlalchemy import select, delete, update, extract, asc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class CRUD:
     @staticmethod
     async def get_dates(session: AsyncSession, model):  # -> list[model_name] | None:
-        stmt = select(model.created_at).distinct()
+        stmt = select(extract('YEAR', model.created_at).label('year')).distinct().order_by(asc('year'))
         dates = await session.scalars(stmt)
         return list(dates)
 
@@ -23,9 +23,12 @@ class CRUD:
 
     @staticmethod
     async def item_exists(session: AsyncSession, id: int, model) -> bool:
-        stmt = select(model.id).where(model.id == id).exists()
-        result = await session.execute(stmt)
-        return result.scalar()
+        # TODO: через метод .exists() выдает ошибку
+        # stmt = select(model).where(model.id == id).exists()
+        # result = await session.execute(text(str(stmt)), {'id': id})
+        stmt = select(model).where(model.id == id)
+        item = await session.execute(stmt)
+        return bool(item.scalar())
 
     @staticmethod
     async def create_item(session: AsyncSession, model, schema_fields):  # -> model_name:
