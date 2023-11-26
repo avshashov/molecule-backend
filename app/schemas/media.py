@@ -7,10 +7,10 @@ class MediaBase(BaseModel):
     description: str
 
 
-class Media(MediaBase):
-    id: int
+class MediaCreate(MediaBase):
     link: str
 
 
-class MediaCreate(MediaBase):
-    file: bytes
+class Media(MediaCreate):
+    id: int
+    link: str
