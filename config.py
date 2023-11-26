@@ -14,8 +14,13 @@ class Database(BaseModel):
     echo_db: bool
 
 
+class Files(BaseModel):
+    temp_dir: str
+
+
 class Settings(YamlBaseSettings):
     database: Database
+    files: Files
 
     model_config = SettingsConfigDict(yaml_file='config.yaml')
 
