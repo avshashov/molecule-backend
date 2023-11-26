@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, UploadFile
+from fastapi import APIRouter, Depends, UploadFile, status, File, Form
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import models
@@ -23,11 +23,20 @@ async def get_media_file(db: Session, media_id: int):
     pass
 
 
-@router.post('/')
-async def upload_media_file(db: Session, file: UploadFile, media_metadata: schemas.MediaBase):
-    filepath = await files.save_file(file, media_metadata)
-    media_metadata = schemas.MediaCreate(**media_metadata.model_dump(), link=filepath)
-    await CRUD.create_item(session=db, model=models.Media, schema_fields=media_metadata)
+@router.post('/', status_code=status.HTTP_201_CREATED)
+async def upload_media_file(
+    db: Session,
+    file: Annotated[UploadFile, File()],
+    media_name: Annotated[str, Form()],
+    media_type_id: Annotated[int, Form()],
+    media_description: Annotated[str, Form()],
+):
+    filepath = await files.save_file(file, media_name)
+    media_metadata = schemas.MediaCreate(
+        name=media_name, type_id=media_type_id, link=filepath, description=media_description
+    )
+    file_metadata = await CRUD.create_item(session=db, model=models.Media, schema_fields=media_metadata)
+    return file_metadata
 
 
 @router.delete('/{media_id}')
