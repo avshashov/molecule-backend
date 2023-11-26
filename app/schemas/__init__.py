@@ -1,2 +1,2 @@
-from press import Press, PressUpdate, PressCreate, PressBase
-from media import Media, MediaBase, MediaCreate
+from .press import Press, PressUpdate, PressCreate, PressBase
+from .media import Media, MediaBase, MediaCreate
