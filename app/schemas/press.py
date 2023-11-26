@@ -7,7 +7,7 @@ class PressBase(BaseModel):
     title: str
     description: str
     created_at: date
-    preview_photo: int
+    preview_photo_id: int
     external_link: str
 
 
@@ -24,6 +24,6 @@ class PressUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
     created_at: date | None = None
-    id_posted: bool | None = None
-    preview_photo: int | None = None
+    is_posted: bool | None = None
+    preview_photo_id: int | None = None
     external_link: str | None = None
