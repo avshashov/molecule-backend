@@ -17,7 +17,7 @@ class Media(BaseWithId):
     __tablename__ = 'media'
 
     name: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
-    type_id: Mapped[int]
+    type_id: Mapped[int] = mapped_column(ForeignKey('media_type.id', ondelete='CASCADE'))
     link: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
 
@@ -70,7 +70,7 @@ class Press(BaseWithId):
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
+    preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
     external_link: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
 
 

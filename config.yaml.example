@@ -7,3 +7,6 @@ database:
     password: # Database password (str, optional)
     database: # Database name (str)
     echo_db: # Print database log output (bool)
+
+files:
+    temp_dir: # Absolute path for temp directory

@@ -32,7 +32,10 @@ class Database:
             f'/{self._settings_db.database}'
         )
         return url
-    
+
     @property
     def url(self):
         return self._url
+
+
+database = Database()
