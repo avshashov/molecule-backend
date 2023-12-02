@@ -17,13 +17,13 @@ class CRUD:
 
     @staticmethod
     async def get_items(
-        session: AsyncSession, model, year: int, is_posted: bool = True
+        session: AsyncSession, model, year: int, is_posted: bool = True, count: int = 10, offset: int = 0
     ):  # -> list[models_name] | None:
         stmt = (
             select(model)
             .where(extract('YEAR', model.created_at).label('year') == year, model.is_posted.is_(is_posted))
             .order_by(desc(model.created_at))
-        )
+        ).slice(offset, offset + count)
 
         item = await session.scalars(stmt)
         return list(item)
