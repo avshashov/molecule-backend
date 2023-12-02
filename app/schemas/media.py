@@ -13,4 +13,3 @@ class MediaCreate(MediaBase):
 
 class Media(MediaCreate):
     id: int
-    link: str
