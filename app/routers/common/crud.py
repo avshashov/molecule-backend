@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete, update, extract, asc
+from sqlalchemy import select, delete, update, extract, asc, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -16,8 +16,14 @@ class CRUD:
         return item.scalar()
 
     @staticmethod
-    async def get_items(session: AsyncSession, model):  # -> list[models_name] | None:
-        stmt = select(model)
+    async def get_items(session: AsyncSession, model, year: int):  # -> list[models_name] | None:
+        stmt = (
+            select(model)
+            .where(extract('YEAR', model.created_at).label('year') == year)
+            .order_by(desc(model.created_at))
+        )
+
+        # stmt = select(model)
         item = await session.scalars(stmt)
         return list(item)
 

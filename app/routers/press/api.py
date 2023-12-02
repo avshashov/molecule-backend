@@ -21,8 +21,8 @@ async def get_all_press_dates(db: Session):
 
 
 @router.get('/')
-async def get_all_press(db: Session):
-    press = await CRUD.get_items(session=db, model=models.Press)
+async def get_all_press(db: Session, year: int):
+    press = await CRUD.get_items(session=db, model=models.Press, year=year)
     if press:
         return press
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Press not found')
