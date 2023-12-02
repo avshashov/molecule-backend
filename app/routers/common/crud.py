@@ -16,14 +16,15 @@ class CRUD:
         return item.scalar()
 
     @staticmethod
-    async def get_items(session: AsyncSession, model, year: int):  # -> list[models_name] | None:
+    async def get_items(
+        session: AsyncSession, model, year: int, is_posted: bool = True
+    ):  # -> list[models_name] | None:
         stmt = (
             select(model)
-            .where(extract('YEAR', model.created_at).label('year') == year)
+            .where(extract('YEAR', model.created_at).label('year') == year, model.is_posted.is_(is_posted))
             .order_by(desc(model.created_at))
         )
 
-        # stmt = select(model)
         item = await session.scalars(stmt)
         return list(item)
 
