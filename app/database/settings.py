@@ -1,3 +1,5 @@
+from typing import AsyncIterable
+
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from config import settings
 from app.database.models import Base
@@ -14,7 +16,7 @@ class Database:
         async with self.engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
-    async def get_session(self) -> AsyncSession:
+    async def get_session(self) -> AsyncIterable[AsyncSession]:
         async with self.async_session() as session:
             yield session
 
