@@ -1,6 +1,7 @@
 ### PyCharm template
 .env
 config.yaml
+.coverage
 
 #temporary files
 app/temp
