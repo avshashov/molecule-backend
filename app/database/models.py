@@ -36,7 +36,7 @@ class News(BaseWithId):
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
     bot_post_setting_id: Mapped[int] = mapped_column(ForeignKey('bot_post_setting.id', ondelete='CASCADE'))
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
+    preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class BotPostSetting(BaseWithId):
@@ -60,7 +60,7 @@ class Project(BaseWithId):
     project_category_id: Mapped[int] = mapped_column(ForeignKey('project_category.id', ondelete='CASCADE'))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
+    preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class Press(BaseWithId):
@@ -91,7 +91,7 @@ class Painting(BaseWithId):
     materials: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    preview_photo: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
+    preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
 class MediaPainting(Base):
