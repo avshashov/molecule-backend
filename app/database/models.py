@@ -35,14 +35,8 @@ class News(BaseWithId):
     text: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
-    bot_post_setting_id: Mapped[int] = mapped_column(ForeignKey('bot_post_setting.id', ondelete='CASCADE'))
+    is_posted_in_bot: Mapped[bool] = mapped_column(default=False)
     preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
-
-
-class BotPostSetting(BaseWithId):
-    __tablename__ = 'bot_post_setting'
-
-    is_posted: Mapped[bool] = mapped_column(default=True)
 
 
 class ProjectCategory(BaseWithId):
@@ -60,6 +54,7 @@ class Project(BaseWithId):
     project_category_id: Mapped[int] = mapped_column(ForeignKey('project_category.id', ondelete='CASCADE'))
     created_at: Mapped[date]
     is_posted: Mapped[bool] = mapped_column(default=True)
+    is_posted_in_bot: Mapped[bool] = mapped_column(default=False)
     preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
 
