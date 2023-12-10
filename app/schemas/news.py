@@ -13,18 +13,18 @@ class NewsBase(BaseModel):
 class News(NewsBase):
     id: int
     is_posted: bool
-    bot_post_setting_id: int
+    is_posted_in_bot: bool
 
 
 class NewsCreate(NewsBase):
-    is_posted: bool | None = None
-    bot_post_setting_id: int
+    is_posted: bool = True
+    is_posted_in_bot: bool = False
 
 
 class NewsUpdate(BaseModel):
     description: str | None = None
     text: str | None = None
     created_at: date | None = None
-    is_posted: bool | None = None
+    is_posted: bool = True
     preview_photo_id: int | None = None
-    bot_post_setting_id: int | None = None
+    is_posted_in_bot: bool = False
