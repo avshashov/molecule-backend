@@ -3,27 +3,28 @@ from datetime import date
 from pydantic import BaseModel
 
 
-class PressBase(BaseModel):
-    title: str
+class NewsBase(BaseModel):
     description: str
+    text: str
     created_at: date
     preview_photo_id: int
-    external_link: str
 
 
-class Press(PressBase):
+class News(NewsBase):
     id: int
     is_posted: bool
+    is_posted_in_bot: bool
 
 
-class PressCreate(PressBase):
+class NewsCreate(NewsBase):
     is_posted: bool = True
+    is_posted_in_bot: bool = False
 
 
-class PressUpdate(BaseModel):
-    title: str | None = None
+class NewsUpdate(BaseModel):
     description: str | None = None
+    text: str | None = None
     created_at: date | None = None
     is_posted: bool = True
     preview_photo_id: int | None = None
-    external_link: str | None = None
+    is_posted_in_bot: bool = False
