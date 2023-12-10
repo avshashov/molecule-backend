@@ -17,13 +17,13 @@ class Press(PressBase):
 
 
 class PressCreate(PressBase):
-    is_posted: bool | None = None
+    is_posted: bool = True
 
 
 class PressUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
     created_at: date | None = None
-    is_posted: bool | None = None
+    is_posted: bool = True
     preview_photo_id: int | None = None
     external_link: str | None = None
