@@ -4,15 +4,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.models import Project, ProjectCategory
 
 
-async def get_categories(session: AsyncSession) -> list[ProjectCategory] | None:
+async def get_categories(session: AsyncSession) -> list[ProjectCategory] | list:
     stmt = select(ProjectCategory.name).order_by(asc(ProjectCategory.name))
-    dates = await session.scalars(stmt)
-    return list(dates)
+    categories = await session.scalars(stmt)
+    return list(categories)
 
 
 async def get_items(
     session: AsyncSession, year: int, category: str, is_posted: bool = True, count: int = 10, offset: int = 0
-) -> list[Project] | None:
+) -> list[Project] | list:
     stmt = (
         select(Project)
         .join(ProjectCategory)
