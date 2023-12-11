@@ -7,12 +7,12 @@ class ElectronsBase(BaseModel):
     photo_id: int
 
 
-class Electrons(ElectronsBase):
-    id: int
-
-
-class ElectronsCreate(Electrons):
+class ElectronsCreate(ElectronsBase):
     pass
+
+
+class Electrons(ElectronsCreate):
+    id: int
 
 
 class ElectronsUpdate(BaseModel):
