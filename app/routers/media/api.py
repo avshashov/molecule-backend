@@ -45,12 +45,22 @@ async def upload_media_file(
     media_metadata = schemas.MediaCreate(
         name=media_name, type_id=media_type_id, link=filepath, description=media_description
     )
-    file_metadata = await CRUD.create_item(
-        session=db, model=models.Media, schema_fields=media_metadata
-    )
+    file_metadata = await CRUD.create_item(session=db, model=models.Media, schema_fields=media_metadata)
     return file_metadata
 
 
-@router.delete('/{media_id}')
+@router.delete('/{media_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_media_file(db: Session, media_id: int):
-    pass
+    if not await CRUD.item_exists(session=db, id=media_id, model=models.Media):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Media with {media_id} not found')
+    await CRUD.delete_item(session=db, id=media_id, model=models.Media)
+
+
+@router.patch('/{media_id}', status_code=status.HTTP_200_OK)
+async def patch_name_or_description_media(db: Session, media_id: int, new_media_fields: schemas.MediaUpdate):
+    if not await CRUD.item_exists(session=db, id=media_id, model=models.Media):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Media with {media_id} not found')
+    media = await CRUD.update_item(
+        session=db, id=media_id, model=models.Media, schema_fields=new_media_fields
+    )
+    return media
