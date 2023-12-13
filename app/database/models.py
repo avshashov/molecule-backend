@@ -1,6 +1,6 @@
 from datetime import date
 
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy import String, ForeignKey
 
 
@@ -20,6 +20,8 @@ class Media(BaseWithId):
     type_id: Mapped[int] = mapped_column(ForeignKey('media_type.id', ondelete='CASCADE'))
     link: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
+
+    media_type: Mapped['MediaType'] = relationship("MediaType", backref="media")
 
 
 class MediaType(BaseWithId):
