@@ -13,3 +13,9 @@ class MediaCreate(MediaBase):
 
 class Media(MediaCreate):
     id: int
+
+
+class MediaUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+
