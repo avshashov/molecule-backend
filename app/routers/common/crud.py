@@ -1,5 +1,8 @@
 from sqlalchemy import select, delete, update, extract, asc, desc
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
+from app.database.models import Media
 
 
 class CRUD:
@@ -61,3 +64,15 @@ class CRUD:
         item = await session.execute(stmt)
         await session.commit()
         return item.scalar()
+
+    @staticmethod
+    async def get_media_items(
+        session: AsyncSession, count: int = 10, offset: int = 0, id: int = None
+    ) -> list[Media] | list:
+        if id:
+            stmt = select(Media).where(Media.id == id)
+        else:
+            stmt = select(Media)
+        stmt = (stmt.options(joinedload(Media.media_type))).slice(offset, offset + count)
+        media = await session.scalars(stmt)
+        return list(media)
