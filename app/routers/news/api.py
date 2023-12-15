@@ -13,10 +13,10 @@ Session = Annotated[AsyncSession, Depends(database.get_session)]
 
 
 @router.get('/news_dates')
-async def get_all_news_dates(db: Session):
+async def get_all_news_dates(db: Session) -> schemas.Dates:
     dates = await CRUD.get_dates(session=db, model=models.News)
     if dates:
-        return dates
+        return {'years': dates}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Dates not found')
 
 
@@ -27,17 +27,17 @@ async def get_all_news(
     is_posted: bool = True,
     count: Annotated[int, Query(ge=5, le=50)] = 10,
     offset: Annotated[int, Query(ge=0, le=50)] = 0,
-):
+) -> schemas.NewsMany:
     news = await CRUD.get_items(
         session=db, model=models.News, year=year, is_posted=is_posted, count=count, offset=offset
     )
     if news:
-        return news
+        return {'news': news}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='News not found')
 
 
 @router.get('/{news_id}')
-async def get_news_article(db: Session, news_id: int):
+async def get_news_article(db: Session, news_id: int) -> schemas.News:
     article = await CRUD.get_item(session=db, id=news_id, model=models.News)
     if article:
         return article
@@ -47,7 +47,7 @@ async def get_news_article(db: Session, news_id: int):
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_news_article(db: Session, article: schemas.NewsCreate):
+async def create_news_article(db: Session, article: schemas.NewsCreate) -> schemas.NewsCreate:
     article = await CRUD.create_item(session=db, model=models.News, schema_fields=article)
     return article
 
