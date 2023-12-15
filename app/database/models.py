@@ -62,6 +62,7 @@ class Project(BaseWithId):
     preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
     preview_photo: Mapped['Media'] = relationship("Media", backref="project")
+    project_category: Mapped['ProjectCategory'] = relationship("ProjectCategory", backref="project")
 
 
 class Press(BaseWithId):
