@@ -1,5 +1,6 @@
 from sqlalchemy import select, asc, extract, desc
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
 from app.database.models import Project, ProjectCategory
 
@@ -7,7 +8,7 @@ from app.database.models import Project, ProjectCategory
 class CRUD:
     @staticmethod
     async def get_categories(session: AsyncSession) -> list[ProjectCategory] | list:
-        stmt = select(ProjectCategory.name).order_by(asc(ProjectCategory.name))
+        stmt = select(ProjectCategory).order_by(asc(ProjectCategory.name))
         categories = await session.scalars(stmt)
         return list(categories)
 
@@ -22,7 +23,7 @@ class CRUD:
     ) -> list[Project] | list:
         stmt = (
             select(Project)
-            .join(ProjectCategory)
+            .options(joinedload(Project.preview_photo), joinedload(Project.project_category))
             .where(
                 ProjectCategory.name == category,
                 Project.is_posted.is_(is_posted),
@@ -31,5 +32,15 @@ class CRUD:
             .order_by(desc(Project.created_at))
         ).slice(offset, offset + count)
 
-        items = await session.scalars(stmt)
-        return list(items)
+        item = await session.scalars(stmt)
+        return list(item)
+
+    @staticmethod
+    async def get_item(session: AsyncSession, id: int) -> Project | None:
+        stmt = (
+            select(Project)
+            .options(joinedload(Project.preview_photo), joinedload(Project.project_category))
+            .where(Project.id == id)
+        )
+        item = await session.execute(stmt)
+        return item.scalar()
