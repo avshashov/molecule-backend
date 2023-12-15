@@ -31,5 +31,5 @@ class CRUD:
             .order_by(desc(Project.created_at))
         ).slice(offset, offset + count)
 
-        item = await session.scalars(stmt)
-        return list(item)
+        items = await session.scalars(stmt)
+        return list(items)

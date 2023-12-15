@@ -25,8 +25,8 @@ class CRUD:
             .order_by(desc(model.created_at))
         ).slice(offset, offset + count)
 
-        item = await session.scalars(stmt)
-        return list(item)
+        items = await session.scalars(stmt)
+        return list(items)
 
     @staticmethod
     async def item_exists(session: AsyncSession, id: int, model) -> bool:
