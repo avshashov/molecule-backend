@@ -4,7 +4,7 @@ Poetry is used as package managment system. You can find it and installation gui
 ### Step 1. Initializing poetry
 Installing from poetry is pretty simple. Just type
 ```
-poetry install
+poetry install --without dev
 ```
 at the project directory
 
@@ -31,3 +31,14 @@ or
 ```
 uvicorn main:app
 ```
+
+### Step 5. Developing
+If you want to develop something for our project, execute this command:
+```
+poetry install --with dev
+```
+And don't forget to install pre-commit hook
+```
+pre-commit install
+```
+All rules for our tools available in `pyproject.toml` and `.pre-commit-config.yaml`
