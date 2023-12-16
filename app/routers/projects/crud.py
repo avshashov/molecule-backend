@@ -2,7 +2,7 @@ from sqlalchemy import select, asc, extract, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from app.database.models import Project, ProjectCategory
+from app.database.models import Project, ProjectCategory, Media
 
 
 class CRUD:
@@ -23,6 +23,8 @@ class CRUD:
     ) -> list[Project] | list:
         stmt = (
             select(Project)
+            .join(ProjectCategory)
+            .join(Media)
             .options(joinedload(Project.preview_photo), joinedload(Project.project_category))
             .where(
                 ProjectCategory.name == category,
@@ -31,7 +33,6 @@ class CRUD:
             )
             .order_by(desc(Project.created_at))
         ).slice(offset, offset + count)
-
         item = await session.scalars(stmt)
         return list(item)
 
@@ -39,6 +40,8 @@ class CRUD:
     async def get_item(session: AsyncSession, id: int) -> Project | None:
         stmt = (
             select(Project)
+            .join(ProjectCategory)
+            .join(Media)
             .options(joinedload(Project.preview_photo), joinedload(Project.project_category))
             .where(Project.id == id)
         )
