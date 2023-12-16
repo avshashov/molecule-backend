@@ -17,9 +17,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(media)
+app.include_router(news)
 app.include_router(press)
 app.include_router(projects)
-app.include_router(news)
 app.include_router(electrons)
 
 if __name__ == '__main__':
