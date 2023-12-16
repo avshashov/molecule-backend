@@ -21,12 +21,12 @@ async def get_participants(
 ):
     participants = await CRUD.get_items(session=db, count=count, offset=offset)
     if participants:
-        return participants
+        return {'participants': participants}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Electrons not found')
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_participant(db: Session, participant: schemas.ElectronsCreate):
+async def create_participant(db: Session, participant: schemas.ElectronsCreate) -> schemas.ElectronsCreate:
     participant = await CommonCRUD.create_item(session=db, model=models.Electron, schema_fields=participant)
     return participant
 
