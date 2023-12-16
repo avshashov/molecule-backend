@@ -2,22 +2,29 @@ from datetime import date
 
 from pydantic import BaseModel
 
+from app.schemas import Media
+
 
 class PressBase(BaseModel):
     title: str
     description: str
     created_at: date
-    preview_photo_id: int
     external_link: str
 
 
 class Press(PressBase):
     id: int
     is_posted: bool
+    preview_photo: Media
+
+
+class PressMany(BaseModel):
+    press: list[Press]
 
 
 class PressCreate(PressBase):
     is_posted: bool = True
+    preview_photo_id: int
 
 
 class PressUpdate(BaseModel):
