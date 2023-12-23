@@ -25,6 +25,10 @@ class Media(MediaBase):
     media_type: MediaType
 
 
+class MediaPreviewPhoto(MediaBase):
+    id: int
+
+
 class MediaMany(BaseModel):
     media: list[Media]
 
