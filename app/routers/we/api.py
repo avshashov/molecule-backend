@@ -18,7 +18,7 @@ async def get_participants(
     db: Session,
     count: Annotated[int, Query(ge=5, le=50)] = 10,
     offset: Annotated[int, Query(ge=0, le=50)] = 0,
-):
+) -> schemas.Electrons:
     participants = await CRUD.get_items(session=db, count=count, offset=offset)
     if participants:
         return {'participants': participants}
