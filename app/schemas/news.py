@@ -2,7 +2,7 @@ from datetime import date
 
 from pydantic import BaseModel
 
-from app.schemas.media import Media
+from app.schemas.media import MediaPreviewPhoto
 
 
 class NewsBase(BaseModel):
@@ -15,7 +15,7 @@ class News(NewsBase):
     id: int
     is_posted: bool
     is_posted_in_bot: bool
-    preview_photo: Media
+    preview_photo: MediaPreviewPhoto
 
 
 class NewsMany(BaseModel):
