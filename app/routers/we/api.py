@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import schemas
 from app.database import models
 from app.database.settings import database
-from app.routers.common.crud import CRUD as CommonCRUD
+from app.common.crud import CRUD as CommonCRUD
 from app.routers.we.crud import CRUD
 
 router = APIRouter(prefix='/we/electrons', tags=['electrons'])

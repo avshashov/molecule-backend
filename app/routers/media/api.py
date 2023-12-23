@@ -6,8 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import models
 from app.database.settings import database
 from app import schemas
-from app.routers.common import files
-from app.routers.common.crud import CRUD as CommonCRUD
+from app.common import files
+from app.common.crud import CRUD as CommonCRUD
 from app.routers.media.crud import CRUD
 
 router = APIRouter(prefix='/media', tags=['media'])

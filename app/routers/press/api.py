@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import schemas
 from app.database import models
 from app.database.settings import database
-from app.routers.common.crud import CRUD
+from app.common.crud import CRUD
 
 router = APIRouter(prefix='/press', tags=['press'])
 Session = Annotated[AsyncSession, Depends(database.get_session)]
