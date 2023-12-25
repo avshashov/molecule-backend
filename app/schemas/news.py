@@ -53,26 +53,6 @@ class NewsMany(BaseModel):
     news: list[News] = Field(
         title='News list',
         description='News list',
-        examples=[
-            [
-                {
-                    "description": "The shooting of paintings and artists continues. "
-                                   "Today we filmed the first part of our promo.",
-                    "text": "Aggressive luxury is trying to trample the Molecule "
-                            "already at the entrance... [picture](url_to_picture)",
-                    "created_at": "2023-12-24",
-                    "id": 1,
-                    "is_posted": True,
-                    "is_posted_in_bot": False,
-                    "preview_photo": {
-                        "name": "Some photo name",
-                        "description": "Some photo description",
-                        "id": 1,
-                        "link": "https://somepath-to-media/some-media.png",
-                    },
-                }
-            ]
-        ],
     )
 
 

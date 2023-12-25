@@ -47,24 +47,6 @@ class PressMany(BaseModel):
     press: list[Press] = Field(
         title='Press list',
         description='Press list',
-        examples=[
-            [
-                {
-                    "title": "VOGUE.\nINTERVIEW",
-                    "description": "On a glorious Saturday morning, the Molecule was invited to Zaimka",
-                    "created_at": "2023-12-24",
-                    "external_link": "https://example.com/some-press-article",
-                    "id": 1,
-                    "is_posted": True,
-                    "preview_photo": {
-                        "name": "Some photo name",
-                        "description": "Some photo description",
-                        "id": 1,
-                        "link": "https://somepath-to-media/some-media.png",
-                    },
-                }
-            ]
-        ],
     )
 
 
