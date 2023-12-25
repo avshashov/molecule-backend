@@ -102,8 +102,8 @@ class NewsUpdate(BaseModel):
         description='New news release date',
         examples=['2023-12-24'],
     )
-    is_posted: bool = Field(
-        default=True,
+    is_posted: bool | None = Field(
+        default=None,
         title='Publication of news',
         description='Has the news been published?',
         examples=[True],
@@ -115,8 +115,8 @@ class NewsUpdate(BaseModel):
         examples=[1],
         gt=0,
     )
-    is_posted_in_bot: bool = Field(
-        default=False,
+    is_posted_in_bot: bool | None = Field(
+        default=None,
         title='Publication news in a telegram bot',
         description='Has the news been published in a telegram bot?',
         examples=[False],

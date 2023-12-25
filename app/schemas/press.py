@@ -84,8 +84,8 @@ class PressUpdate(BaseModel):
         description='New press article release date',
         examples=['2023-12-24'],
     )
-    is_posted: bool = Field(
-        default=True,
+    is_posted: bool | None = Field(
+        default=None,
         title='Publication of press article',
         description='Has the press article been published?',
         examples=[True],

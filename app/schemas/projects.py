@@ -142,14 +142,14 @@ class ProjectUpdate(BaseModel):
         description='New project release date',
         examples=['2023-12-24'],
     )
-    is_posted: bool = Field(
-        default=True,
+    is_posted: bool | None = Field(
+        default=None,
         title='Publication of project',
         description='Has the project been published?',
         examples=[True],
     )
-    is_posted_in_bot: bool = Field(
-        default=False,
+    is_posted_in_bot: bool | None = Field(
+        default=None,
         title='Publication project in a telegram bot',
         description='Has the project been published in a telegram bot?',
         examples=[False],
