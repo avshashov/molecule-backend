@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import schemas
 from app.database import models
 from app.database.settings import database
-from app.routers.common.crud import CRUD as CommonCRUD
+from app.common.crud import CRUD as CommonCRUD
 from app.routers.we.crud import CRUD
 
 router = APIRouter(prefix='/we/electrons', tags=['electrons'])
@@ -18,15 +18,15 @@ async def get_participants(
     db: Session,
     count: Annotated[int, Query(ge=5, le=50)] = 10,
     offset: Annotated[int, Query(ge=0, le=50)] = 0,
-):
+) -> schemas.Electrons:
     participants = await CRUD.get_items(session=db, count=count, offset=offset)
     if participants:
-        return participants
+        return {'participants': participants}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Electrons not found')
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_participant(db: Session, participant: schemas.ElectronsCreate):
+async def create_participant(db: Session, participant: schemas.ElectronsCreate) -> schemas.ElectronsCreate:
     participant = await CommonCRUD.create_item(session=db, model=models.Electron, schema_fields=participant)
     return participant
 

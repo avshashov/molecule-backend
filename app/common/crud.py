@@ -1,5 +1,6 @@
 from sqlalchemy import select, delete, update, extract, asc, desc
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
 
 class CRUD:
@@ -11,7 +12,7 @@ class CRUD:
 
     @staticmethod
     async def get_item(session: AsyncSession, id: int, model):  # -> model_name | None:
-        stmt = select(model).where(model.id == id)
+        stmt = select(model).options(joinedload(model.preview_photo)).where(model.id == id)
         item = await session.execute(stmt)
         return item.scalar()
 
@@ -21,6 +22,7 @@ class CRUD:
     ):  # -> list[models_name] | None:
         stmt = (
             select(model)
+            .options(joinedload(model.preview_photo))
             .where(extract('YEAR', model.created_at).label('year') == year, model.is_posted.is_(is_posted))
             .order_by(desc(model.created_at))
         ).slice(offset, offset + count)

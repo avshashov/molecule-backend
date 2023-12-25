@@ -6,17 +6,17 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import schemas
 from app.database import models
 from app.database.settings import database
-from app.routers.common.crud import CRUD
+from app.common.crud import CRUD
 
 router = APIRouter(prefix='/press', tags=['press'])
 Session = Annotated[AsyncSession, Depends(database.get_session)]
 
 
 @router.get('/press_dates')
-async def get_all_press_dates(db: Session):
+async def get_all_press_dates(db: Session) -> schemas.Dates:
     dates = await CRUD.get_dates(session=db, model=models.Press)
     if dates:
-        return dates
+        return {'years': dates}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Dates not found')
 
 
@@ -27,17 +27,17 @@ async def get_all_press(
     is_posted: bool = True,
     count: Annotated[int, Query(ge=5, le=50)] = 10,
     offset: Annotated[int, Query(ge=0, le=50)] = 0,
-):
+) -> schemas.PressMany:
     press = await CRUD.get_items(
         session=db, model=models.Press, year=year, is_posted=is_posted, count=count, offset=offset
     )
     if press:
-        return press
+        return {'press': press}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Press not found')
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_press_article(db: Session, article: schemas.PressCreate):
+async def create_press_article(db: Session, article: schemas.PressCreate) -> schemas.PressCreate:
     article = await CRUD.create_item(session=db, model=models.Press, schema_fields=article)
     return article
 

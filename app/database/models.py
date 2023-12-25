@@ -40,6 +40,8 @@ class News(BaseWithId):
     is_posted_in_bot: Mapped[bool] = mapped_column(default=False)
     preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
+    preview_photo: Mapped['Media'] = relationship("Media", backref="news")
+
 
 class ProjectCategory(BaseWithId):
     __tablename__ = 'project_category'
@@ -59,6 +61,9 @@ class Project(BaseWithId):
     is_posted_in_bot: Mapped[bool] = mapped_column(default=False)
     preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
 
+    preview_photo: Mapped['Media'] = relationship("Media", backref="project")
+    project_category: Mapped['ProjectCategory'] = relationship("ProjectCategory", backref="project")
+
 
 class Press(BaseWithId):
     __tablename__ = 'press'
@@ -70,6 +75,8 @@ class Press(BaseWithId):
     preview_photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
     external_link: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
 
+    preview_photo: Mapped['Media'] = relationship("Media", backref="press")
+
 
 class Electron(BaseWithId):
     __tablename__ = 'electron'
@@ -77,6 +84,8 @@ class Electron(BaseWithId):
     name: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     description: Mapped[str] = mapped_column(String(length=Base.DEFAULT_STR_LENGTH))
     photo_id: Mapped[int] = mapped_column(ForeignKey('media.id', ondelete='CASCADE'))
+
+    preview_photo: Mapped['Media'] = relationship("Media", backref="electron")
 
 
 class Painting(BaseWithId):
